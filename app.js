@@ -6,10 +6,9 @@ const fs = require('fs');
 // RenderFile
 const renderHTML=(req,res)=>{
     const url = req.url;
-    console.log(url);
 
     const method = req.method;
-    console.log(method);
+    console.log(`${method} ${url}`);
     
     fs.readFile(`./${url}.html`,(err,data)=>{
         if(err){
