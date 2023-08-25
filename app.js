@@ -71,9 +71,11 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const expressLayouts = require('express-ejs-layouts')
+const morgan = require('morgan');
 
 app.set('view engine','ejs');
-app.use(expressLayouts)
+app.use(expressLayouts);
+app.use(morgan('dev'));
 app.use(express.static('Public'));
 
 
