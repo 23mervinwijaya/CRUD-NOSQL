@@ -56,7 +56,7 @@
 //     //     email : '23mervinwijaya@gmail.com'
 //     // })
 //     // res.send('<h1>Page Not Found</h1>')
-
+ 
 //     res.sendFile('views/404.html',{root:__dirname})
 // })
 
@@ -71,37 +71,29 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const expressLayouts = require('express-ejs-layouts')
-const morgan = require('morgan');
 
 app.set('view engine','ejs');
 app.use(expressLayouts);
-app.use(morgan('dev'));
 app.use(express.static('Public'));
 
 
 app.get('/',(req,res)=>{
-    const mahasiswa = [
-        {
-            nama : 'Mervin',
-            kelas : 8,
-            noTelp : 3213
-        },
-        {
-            nama : 'Sandhika Galih',
-            kelas : 9,
-            noTelp : 1515
-        }
-    ]
+
     res.render('index',{
         layout : 'layouts/main-layouts',
         title:"Homepage",
-        mahasiswa
     })
 })
 app.get('/about',(req,res)=>{
     res.render('about',{
         layout : 'layouts/main-layouts',
         title:"About page",
+    })
+})
+app.get('/contact',(req,res)=>{
+    res.render('contact',{
+        layout : 'layouts/main-layouts',
+        title:"Contact page",
     })
 })
 app.use('/',(req,res)=>{
