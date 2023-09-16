@@ -16,5 +16,10 @@ const loadData = () =>{
 }
 
 const insertFIle = (nama,umur,email) =>{
-    fs.writeFileSync()
+    loadData(),
+    fs.writeFileSync(
+        filePath,
+        `{"nama":"${nama}","umur":"${umur}","e-mail":"${email}"}`)
 }
+
+insertFIle("valdo",24,'24valdoaprilio@gmail.com')
