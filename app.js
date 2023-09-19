@@ -70,12 +70,14 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-const expressLayouts = require('express-ejs-layouts')
+const expressLayouts = require('express-ejs-layouts');
+const { loadContact,loadDetail} = require('./utils/contact');
+const morgan = require('morgan');
 
 app.set('view engine','ejs');
 app.use(expressLayouts);
 app.use(express.static('Public'));
-
+app.use(morgan('combined'));
 
 app.get('/',(req,res)=>{
 
@@ -91,11 +93,26 @@ app.get('/about',(req,res)=>{
     })
 })
 app.get('/contact',(req,res)=>{
+    const contacts = loadContact();
     res.render('contact',{
         layout : 'layouts/main-layouts',
         title:"Contact page",
+        contacts
     })
 })
+
+app.get('/contact/:nama',(req,res)=>{
+    const contact = loadDetail(req.params.nama);
+    res.render('details',{
+        layout : 'layouts/main-layouts',
+        title:"Contact Details page",
+        contact
+    })
+})
+
+
+
+
 app.use('/',(req,res)=>{
     
     res.render('404',{
