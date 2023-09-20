@@ -65,7 +65,7 @@
 // })
 
 
-// Routing pakai Express + EJS
+// Routing pakai Express + EJS + ejs layouts
 
 const express = require('express');
 const app = express();
@@ -74,10 +74,11 @@ const expressLayouts = require('express-ejs-layouts');
 const { loadContact,loadDetail} = require('./utils/contact');
 const morgan = require('morgan');
 
+
 app.set('view engine','ejs');
 app.use(expressLayouts);
 app.use(express.static('Public'));
-app.use(morgan('combined'));
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
 
 app.get('/',(req,res)=>{
 
@@ -107,6 +108,13 @@ app.get('/contact/:nama',(req,res)=>{
         layout : 'layouts/main-layouts',
         title:"Contact Details page",
         contact
+    })
+})
+
+app.get('/submit-data',(req,res)=>{
+    res.render('submitData',{
+        layout : 'layouts/main-layouts',
+        title:"Submit Data page",
     })
 })
 
