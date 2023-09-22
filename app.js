@@ -1,77 +1,8 @@
-// Routing pakai HTTP Module
-
-// const http = require ('http');
-// const port = 3000;
-// const fs = require('fs');
-
-
-// // RenderFile
-// const renderHTML=(req,res)=>{
-//     const url = req.url;
-
-//     const method = req.method;
-//     console.log(`${method} ${url}`);
-    
-//     fs.readFile(`./${url}.html`,(err,data)=>{
-//         if(err){
-//             res.writeHead(404);
-//             res.write(fs.readFileSync('./404.html'))
-//         }
-//         else{
-//             res.write(data)
-//         }
-//         res.end();
-//     })
-// }
-
-
-// // Create Server
-// http
-// .createServer(renderHTML)
-// .listen(port,()=>{
-//     console.log(`Server is listening to port ${port}`)
-// })
-
-
-//Routing pakai Express.js 
-
-// const express = require('express');
-// const app = express();
-// const port = 3000;
-
-// app.get('/',(req,res)=>{
-//     res.sendFile('views/index.html',{root:__dirname})
-// })
-// app.get('/about',(req,res)=>{
-//     res.sendFile('views/about.html',{root:__dirname})
-// })
-// app.get('/product/:id',(req,res)=>{
-//     res.send(`Product ID : ${req.params.id} <br> Category : ${req.query.type}`)
-// })
-
-// app.use('/',(req,res)=>{
-//     res.status = 404;
-//     // res.json({
-//     //     nama : 'Mervin',
-//     //     email : '23mervinwijaya@gmail.com'
-//     // })
-//     // res.send('<h1>Page Not Found</h1>')
- 
-//     res.sendFile('views/404.html',{root:__dirname})
-// })
-
-// app.listen(port,()=>{
-//     console.log(`Server is listening to port ${port}`)
-// })
-
-
-// Routing pakai Express + EJS + ejs layouts
-
 const express = require('express');
 const app = express();
 const port = 3000;
 const expressLayouts = require('express-ejs-layouts');
-const { loadContact,loadDetail} = require('./utils/contact');
+const { loadContact,loadDetail,addContact} = require('./utils/contact');
 const morgan = require('morgan');
 
 
@@ -79,6 +10,7 @@ app.set('view engine','ejs');
 app.use(expressLayouts);
 app.use(express.static('Public'));
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
+app.use(express.urlencoded())
 
 app.get('/',(req,res)=>{
 
@@ -102,6 +34,18 @@ app.get('/contact',(req,res)=>{
     })
 })
 
+app.get('/contact/add',(req,res)=>{
+    res.render('submitData',{
+        layout : 'layouts/main-layouts',
+        title:"Submit Data page",
+    })
+})
+
+app.post('/contact',(req,res)=>{
+    addContact(req.body);
+    res.redirect('/contact')
+})
+
 app.get('/contact/:nama',(req,res)=>{
     const contact = loadDetail(req.params.nama);
     res.render('details',{
@@ -110,16 +54,6 @@ app.get('/contact/:nama',(req,res)=>{
         contact
     })
 })
-
-app.get('/submit-data',(req,res)=>{
-    res.render('submitData',{
-        layout : 'layouts/main-layouts',
-        title:"Submit Data page",
-    })
-})
-
-
-
 
 app.use('/',(req,res)=>{
     

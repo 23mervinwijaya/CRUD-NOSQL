@@ -1,17 +1,19 @@
 <div class="container mt-5">
-<form method="post">
+<div class="col-md-6">
+  <form method="post" action="/contact">
     <div class="mb-3">
-        <label for="inputNama" class="form-label">Nama Lengkap</label>
-        <input type="text" class="form-control" id="inputNama">
+        <label for="nama" class="form-label" >Nama Lengkap</label>
+        <input type="text" class="form-control" id="inputNama" name="nama" required>
       </div>
     <div class="mb-3">
-      <label for="inputEmail" class="form-label">Alamat E-Mail</label>
-      <input type="email" class="form-control" id="inputEmail">
+      <label for="email" class="form-label">Alamat E-Mail</label>
+      <input type="email" class="form-control" id="inputEmail" name="email">
     </div>
     <div class="mb-3">
-      <label for="inputNoHP" class="form-label">Nomor Telepon</label>
-      <input type="text" class="form-control" id="inputNoHP">
+      <label for="NoHP" class="form-label">Nomor Telepon</label>
+      <input type="text" class="form-control" id="inputNoHP" name="NoHP" required>
     </div>
     <button type="submit" class="btn btn-primary ">Submit</button>
   </form>
+</div>
 </div>

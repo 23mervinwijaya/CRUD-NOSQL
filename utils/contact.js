@@ -1,8 +1,9 @@
 
+const { json } = require('express');
 const {mkdirSync,existsSync,writeFileSync,readFileSync} = require('fs');
 
-const dataPath = './data';
-const filePath = './data/account.json';
+const dataPath = 'data';
+const filePath = 'data/account.json';
 
 if(!existsSync(dataPath)){
     mkdirSync(dataPath);   
@@ -26,7 +27,19 @@ const loadDetail=(nama)=>{
         (contact)=>contact.nama.toLowerCase() === nama.toLowerCase());
     return contact;
 };
-module.exports = {loadContact,loadDetail};
+
+// Tambahkan/timpa file JSON
+const saveContact = (contacts)=>{
+    writeFileSync(filePath,JSON.stringify(contacts))
+}
+
+const addContact = (contact)=>{
+    const contacts = loadContact();
+    contacts.push(contact);
+    saveContact(contacts)
+}
+
+module.exports = {loadContact,loadDetail,addContact};
 
 
 
